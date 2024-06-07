@@ -1,0 +1,133 @@
+-- UI Library untuk Roblox
+local UILibrary = {}
+
+-- Fungsi untuk membuat jendela
+function UILibrary:CreateWindow(title, version, id)
+    local window = {}
+    window.title = title
+    window.version = version
+    window.id = id
+    
+    -- Fungsi untuk membuat tab di dalam jendela
+    function window:CreateTab(name)
+        local tab = {}
+        tab.name = name
+        
+        -- Fungsi untuk membuat frame di dalam tab
+        function tab:CreateFrame(name)
+            local frame = {}
+            frame.name = name
+            
+            -- Fungsi untuk membuat tombol di dalam frame
+            function frame:CreateButton(name, description, callback)
+                local button = {}
+                button.name = name
+                button.description = description
+                button.callback = callback
+                
+                -- Fungsi yang dijalankan saat tombol diklik
+                function button:Click()
+                    if button.callback then
+                        button.callback()
+                    end
+                end
+                
+                return button
+            end
+            
+            -- Fungsi untuk membuat toggle di dalam frame
+            function frame:CreateToggle(name, description, callback)
+                local toggle = {}
+                toggle.name = name
+                toggle.description = description
+                toggle.callback = callback
+                toggle.state = false
+                
+                -- Fungsi untuk mengubah status toggle
+                function toggle:Toggle()
+                    toggle.state = not toggle.state
+                    if toggle.callback then
+                        toggle.callback(toggle.state)
+                    end
+                end
+                
+                return toggle
+            end
+            
+            -- Fungsi untuk membuat bind di dalam frame
+            function frame:CreateBind(name, key, callback)
+                local bind = {}
+                bind.name = name
+                bind.key = key
+                bind.callback = callback
+                
+                -- Fungsi yang dijalankan saat bind diaktifkan
+                function bind:Activate()
+                    if bind.callback then
+                        bind.callback(bind.key)
+                    end
+                end
+                
+                return bind
+            end
+            
+            -- Fungsi untuk membuat textbox di dalam frame
+            function frame:CreateBox(name, id, callback)
+                local box = {}
+                box.name = name
+                box.id = id
+                box.callback = callback
+                
+                -- Fungsi yang dijalankan saat isi textbox diubah
+                function box:Update(text)
+                    if box.callback then
+                        box.callback(text)
+                    end
+                end
+                
+                return box
+            end
+            
+            -- Fungsi untuk membuat slider di dalam frame
+            function frame:CreateSlider(name, min, max, callback)
+                local slider = {}
+                slider.name = name
+                slider.min = min
+                slider.max = max
+                slider.callback = callback
+                slider.value = min
+                
+                -- Fungsi untuk mengubah nilai slider
+                function slider:SetValue(value)
+                    slider.value = value
+                    if slider.callback then
+                        slider.callback(slider.value)
+                    end
+                end
+                
+                return slider
+            end
+            
+            -- Fungsi untuk membuat label di dalam frame
+            function frame:CreateLabel(name)
+                local label = {}
+                label.name = name
+                
+                -- Fungsi untuk mengubah teks label
+                function label:Update(text)
+                    label.name = text
+                end
+                
+                return label
+            end
+            
+            return frame
+        end
+        
+        return tab
+    end
+    
+    return window
+end
+
+return UILibrary
